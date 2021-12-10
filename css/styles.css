@@ -42,3 +42,9 @@
 .gallery__link:hover {
   cursor: zoom-in;
 }
+
+.modal {
+  background-color: honeydew;
+  width: 500px;
+  height: 100px;
+}
