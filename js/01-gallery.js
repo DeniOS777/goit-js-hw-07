@@ -3,7 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 const divGalleryRef = document.querySelector('.gallery');
 
-const createGalleryImages = array => {
+function createGalleryImages(array) {
   return array
     .map(({ preview, original, description }) => {
       return `<div class="gallery__item">
@@ -18,7 +18,7 @@ const createGalleryImages = array => {
   </div>`;
     })
     .join('');
-};
+}
 
 const createMarkup = createGalleryImages(galleryItems);
 
@@ -30,7 +30,7 @@ const instance = basicLightbox.create(
 `,
 );
 
-const onImageZoomClick = event => {
+function onImageZoomClick(event) {
   event.preventDefault();
   const elemImg = instance.element().children[0].firstElementChild;
   const urlBigImage = event.target.dataset.source;
@@ -43,9 +43,9 @@ const onImageZoomClick = event => {
   elemImg.src = `${urlBigImage}`;
   instance.show();
   document.addEventListener('keydown', onModalCloseEscapePress);
-};
+}
 
-const onModalCloseEscapePress = event => {
+function onModalCloseEscapePress(event) {
   const pressKey = event.code;
 
   if (pressKey !== 'Escape') {
@@ -54,6 +54,6 @@ const onModalCloseEscapePress = event => {
 
   instance.close();
   document.removeEventListener('keydown', onModalCloseEscapePress);
-};
+}
 
 divGalleryRef.addEventListener('click', onImageZoomClick);
