@@ -24,22 +24,36 @@ const createMarkup = createGalleryImages(galleryItems);
 
 divGalleryRef.insertAdjacentHTML('beforeend', createMarkup);
 
-const instance = basicLightbox.create(`
-    <img  src="#" width="800" height="600">
-`);
+const instance = basicLightbox.create(
+  `
+    <img src="#" width="800" height="600">
+`,
+);
 
-const onImageZoom = event => {
+const onImageZoomClick = event => {
   event.preventDefault();
-  const elemImg = instance.element().children[0].firstChild;
-  console.log(elemImg);
+  const elemImg = instance.element().children[0].firstElementChild;
   const urlBigImage = event.target.dataset.source;
   const currentElement = event.target.classList.value;
 
-  if (currentElement === 'gallery__image') {
-    elemImg.src = `${urlBigImage}`;
-    instance.show();
+  if (currentElement !== 'gallery__image') {
+    return;
   }
-  return;
+
+  elemImg.src = `${urlBigImage}`;
+  instance.show();
+  document.addEventListener('keydown', onModalCloseEscapePress);
 };
 
-divGalleryRef.addEventListener('click', onImageZoom);
+const onModalCloseEscapePress = event => {
+  const pressKey = event.code;
+
+  if (pressKey !== 'Escape') {
+    return;
+  }
+
+  instance.close();
+  document.removeEventListener('keydown', onModalCloseEscapePress);
+};
+
+divGalleryRef.addEventListener('click', onImageZoomClick);
