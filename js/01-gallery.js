@@ -7,15 +7,15 @@ function createGalleryImages(array) {
   return array
     .map(({ preview, original, description }) => {
       return `<div class="gallery__item">
-    <a class="gallery__link" href="${original}">
-      <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
-      />
-    </a>
-  </div>`;
+                <a class="gallery__link" href="${original}">
+                  <img
+                    class="gallery__image"
+                    src="${preview}"
+                    data-source="${original}"
+                    alt="${description}"
+                  />
+                </a>
+              </div>`;
     })
     .join('');
 }
@@ -24,18 +24,19 @@ const createMarkup = createGalleryImages(galleryItems);
 
 divGalleryRef.insertAdjacentHTML('beforeend', createMarkup);
 
-const instance = basicLightbox.create(`<img src="#" width="800" height="600">`);
+let instance;
 
 function onImageZoomClick(event) {
   event.preventDefault();
-  const elemImg = instance.element().children[0].firstElementChild;
-  const urlBigImage = event.target.dataset.source;
-  const currentElement = event.target.classList.value;
 
-  if (currentElement !== 'gallery__image') {
+  if (event.target.nodeName !== 'IMG') {
     return;
   }
-  elemImg.src = `${urlBigImage}`;
+
+  instance = basicLightbox.create(
+    `<img src="${event.target.dataset.source}" width="800" height="600">`,
+  );
+
   instance.show();
   document.addEventListener('keydown', onModalCloseEscapePress);
 }
