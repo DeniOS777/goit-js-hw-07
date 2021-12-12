@@ -24,11 +24,7 @@ const createMarkup = createGalleryImages(galleryItems);
 
 divGalleryRef.insertAdjacentHTML('beforeend', createMarkup);
 
-const instance = basicLightbox.create(
-  `
-    <img src="#" width="800" height="600">
-`,
-);
+const instance = basicLightbox.create(`<img src="#" width="800" height="600">`);
 
 function onImageZoomClick(event) {
   event.preventDefault();
@@ -39,7 +35,6 @@ function onImageZoomClick(event) {
   if (currentElement !== 'gallery__image') {
     return;
   }
-
   elemImg.src = `${urlBigImage}`;
   instance.show();
   document.addEventListener('keydown', onModalCloseEscapePress);
